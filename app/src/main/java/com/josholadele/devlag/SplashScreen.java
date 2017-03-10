@@ -1,14 +1,16 @@
 package com.josholadele.devlag;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,23 +34,26 @@ public class SplashScreen extends AppCompatActivity {
 
     private void getDeveloperData() {
 
-        String url = "https://jsonplaceholder.typicode.com/users";
+        String url = "https://api.github.com/search/users?q=location:lagos+language:java";
+        String url1 = "https://jsonplaceholder.typicode.com/users";
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(JSONObject response) {
                         ArrayList<Developer> developerList = new ArrayList<>();
-                        for(int i = 0; i < response.length();i++){
+                        JSONArray items = response.optJSONArray("items");
+
+                        for(int i = 0; i < items.length();i++){
 
 
                             Developer developer = new Developer();
                             try {
-                                JSONObject jsonObject = response.getJSONObject(i);
-                                developer.setProfileUrl(jsonObject.optString("website"));
-                                developer.setPhotoUrl("https://avatars1.githubusercontent.com/u/8110201?v=3");
-                                developer.setUsername(jsonObject.optString("username"));
+                                JSONObject jsonObject = items.getJSONObject(i);
+                                developer.setProfileUrl(jsonObject.optString("html_url"));
+                                developer.setPhotoUrl(jsonObject.optString("avatar_url"));
+                                developer.setUsername(jsonObject.optString("login"));
                                 developerList.add(developer);
                                 DEVELOPER_MAP.put(developer.getUsername(), developer);
                             } catch (JSONException e) {
@@ -61,14 +66,81 @@ public class SplashScreen extends AppCompatActivity {
                         startActivity(intent);
                     }
                 }, new Response.ErrorListener() {
-
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO Auto-generated method stub
+                        new AlertDialog.Builder(SplashScreen.this)
+                                .setTitle("Failed to retrieve")
+                                .setMessage("Unable to fetch data at this time")
+                                .setCancelable(false)
+                                .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        getDeveloperData();
+                                    }
+                                })
+                                .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                    @Override
+                                    public void onDismiss(DialogInterface dialogInterface) {
+                                    }
+                                })
+                                .create().show();
                         Toast.makeText(SplashScreen.this, "Failed", Toast.LENGTH_SHORT).show();
                     }
                 });
-        DevLagApplication.getInstance().addToRequestQueue(jsonArrayRequest);
+        DevLagApplication.getInstance().addToRequestQueue(jsonObjectRequest);
+
+//        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+//                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+//
+//                    @Override
+//                    public void onResponse(JSONArray response) {
+//                        ArrayList<Developer> developerList = new ArrayList<>();
+//
+//                        for(int i = 0; i < response.length();i++){
+//
+//
+//                            Developer developer = new Developer();
+//                            try {
+//                                JSONObject jsonObject = response.getJSONObject(i);
+//                                developer.setProfileUrl(jsonObject.optString("username"));
+//                                developer.setPhotoUrl(jsonObject.optString("username"));
+//                                developer.setUsername(jsonObject.optString("username"));
+//                                developerList.add(developer);
+//                                DEVELOPER_MAP.put(developer.getUsername(), developer);
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//
+//                        }
+//                        Intent intent = new Intent(SplashScreen.this, DeveloperListActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        intent.putParcelableArrayListExtra("DeveloperList",developerList);
+//                        startActivity(intent);
+//                    }
+//                }, new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        // TODO Auto-generated method stub
+//                        new AlertDialog.Builder(SplashScreen.this)
+//                                .setTitle("Failed to retrieve")
+//                                .setMessage("Unable to fetch data at this time")
+//                                .setCancelable(false)
+//                                .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialogInterface, int i) {
+//                                        getDeveloperData();
+//                                    }
+//                                })
+//                                .setOnDismissListener(new DialogInterface.OnDismissListener() {
+//                                    @Override
+//                                    public void onDismiss(DialogInterface dialogInterface) {
+//                                    }
+//                                })
+//                                .create().show();
+//                        Toast.makeText(SplashScreen.this, "Failed", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//        DevLagApplication.getInstance().addToRequestQueue(jsonArrayRequest);
 
     }
 }

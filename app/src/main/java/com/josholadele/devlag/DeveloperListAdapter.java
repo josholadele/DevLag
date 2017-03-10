@@ -84,7 +84,6 @@ public class DeveloperListAdapter
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final CircleImageView profileImage;
-        //public final TextView mIdView;
         public final TextView mContentView;
         public Developer mItem;
 
@@ -92,7 +91,6 @@ public class DeveloperListAdapter
             super(view);
             mView = view;
             profileImage = (CircleImageView) view.findViewById(R.id.profileImage);
-            //mIdView = (TextView) view.findViewById(R.id.id);
             mContentView = (TextView) view.findViewById(R.id.content);
         }
 

@@ -5,4 +5,6 @@
     <string name="dummy_title_text">Username</string>
     <string name="profile_url_title">Github link</string>
     <string name="share_text">Check out this awesome developer \@%1$s</string>
+    <string name="profile_url"><u>%1$s</u></string>
+    <string name="user_name">\@%1$s</string>
 </resources>

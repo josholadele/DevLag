@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <item
         android:id="@+id/action_share"
-        android:icon="@drawable/avatar_contact"
+        android:icon="@drawable/ic_share_variant_white_24dp"
         android:orderInCategory="100"
         android:title="Share"
         app:showAsAction="always" />

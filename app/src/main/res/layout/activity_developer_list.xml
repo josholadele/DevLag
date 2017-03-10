@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:theme="@style/ToolbarSidebar"
     android:orientation="vertical"
     tools:context="com.josholadele.devlag.DeveloperListActivity">
 
@@ -13,8 +14,7 @@
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="match_parent">
 
         <include layout="@layout/developer_list" />
     </FrameLayout>

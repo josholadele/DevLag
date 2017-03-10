@@ -28,6 +28,7 @@ public class DeveloperDetailActivity extends AppCompatActivity {
     LinearLayout profileItemsLayout;
     CircleImageView profileImage;
     Developer developer;
+    static DeveloperDetailActivity instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class DeveloperDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        instance = this;
         profileItemsLayout = (LinearLayout) findViewById(R.id.layout_profile_items);
         profileImage = (CircleImageView) findViewById(R.id.profileImage);
 
@@ -79,19 +81,28 @@ public class DeveloperDetailActivity extends AppCompatActivity {
         }
     }
 
-    void addProfileItems(LinearLayout linearLayout, Developer developer){
+    void addProfileItems(LinearLayout linearLayout, final Developer developer){
 
         View profileView = getLayoutInflater().inflate(R.layout.item_profile, linearLayout, false);
         ((TextView) profileView.findViewById(R.id.label_name)).setText("Username");
-        ((TextView) profileView.findViewById(R.id.label_value)).setText(developer.getUsername());
+        String text = getResources().getString(R.string.user_name,developer.getUsername());
+        ((TextView) profileView.findViewById(R.id.label_value)).setText(text);
         linearLayout.addView(profileView);
         linearLayout.addView(getLayoutInflater().inflate(R.layout.item_divider, linearLayout, false));
 
         View profileView1 = getLayoutInflater().inflate(R.layout.item_profile, linearLayout, false);
         ((TextView) profileView1.findViewById(R.id.label_name)).setText(R.string.profile_url_title);
+        String textUrl = getResources().getString(R.string.profile_url,developer.getProfileUrl());
         TextView profileTextView = (TextView) profileView1.findViewById(R.id.label_value);
-        profileTextView.setText(developer.getProfileUrl());
+        profileTextView.setText(textUrl);
         profileTextView.setTextColor(getResources().getColor(R.color.linkBlue));
+        profileTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browse = new Intent(Intent.ACTION_VIEW, Uri.parse(developer.getProfileUrl()));
+                instance.startActivity(browse);
+            }
+        });
         linearLayout.addView(profileView1);
 
     }

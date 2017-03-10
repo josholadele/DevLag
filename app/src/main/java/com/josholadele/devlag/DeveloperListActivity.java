@@ -33,7 +33,6 @@ public class DeveloperListActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle(getTitle());
 
         View recyclerView = findViewById(R.id.developer_list);
         assert recyclerView != null;
