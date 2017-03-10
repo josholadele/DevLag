@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">DevLag</string>
+    <string name="title_developer_detail">Developer Detail</string>
+    <string name="dummy_value_text"><u>http://quickteller.com</u></string>
+    <string name="dummy_title_text">Username</string>
+    <string name="profile_url_title">Github link</string>
+    <string name="share_text">Check out this awesome developer \@%1$s</string>
+</resources>
