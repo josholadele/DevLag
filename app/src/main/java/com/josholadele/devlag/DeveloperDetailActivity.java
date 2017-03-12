@@ -1,6 +1,8 @@
 package com.josholadele.devlag;
 
 import android.content.Intent;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -104,6 +106,8 @@ public class DeveloperDetailActivity extends AppCompatActivity {
         String textUrl = getResources().getString(R.string.profile_url,developer.getProfileUrl());
         TextView profileTextView = (TextView) profileView1.findViewById(R.id.label_value);
         profileTextView.setText(textUrl);
+        profileTextView.setPaintFlags(profileTextView.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+        profileTextView.setTypeface(profileTextView.getTypeface(), Typeface.ITALIC);
         profileTextView.setTextColor(getResources().getColor(R.color.linkBlue));
         profileTextView.setOnClickListener(new View.OnClickListener() {
             @Override
