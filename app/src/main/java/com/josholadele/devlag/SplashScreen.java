@@ -34,8 +34,7 @@ public class SplashScreen extends AppCompatActivity {
 
     private void getDeveloperData() {
 
-        String url = "https://api.github.com/search/users?q=location:lagos+language:java";
-        String url1 = "https://jsonplaceholder.typicode.com/users";
+        String url = "https://api.github.com/search/users?q=location:lagos+language:java&per_page=100";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -89,58 +88,6 @@ public class SplashScreen extends AppCompatActivity {
                     }
                 });
         DevLagApplication.getInstance().addToRequestQueue(jsonObjectRequest);
-
-//        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-//                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-//
-//                    @Override
-//                    public void onResponse(JSONArray response) {
-//                        ArrayList<Developer> developerList = new ArrayList<>();
-//
-//                        for(int i = 0; i < response.length();i++){
-//
-//
-//                            Developer developer = new Developer();
-//                            try {
-//                                JSONObject jsonObject = response.getJSONObject(i);
-//                                developer.setProfileUrl(jsonObject.optString("username"));
-//                                developer.setPhotoUrl(jsonObject.optString("username"));
-//                                developer.setUsername(jsonObject.optString("username"));
-//                                developerList.add(developer);
-//                                DEVELOPER_MAP.put(developer.getUsername(), developer);
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//
-//                        }
-//                        Intent intent = new Intent(SplashScreen.this, DeveloperListActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                        intent.putParcelableArrayListExtra("DeveloperList",developerList);
-//                        startActivity(intent);
-//                    }
-//                }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        // TODO Auto-generated method stub
-//                        new AlertDialog.Builder(SplashScreen.this)
-//                                .setTitle("Failed to retrieve")
-//                                .setMessage("Unable to fetch data at this time")
-//                                .setCancelable(false)
-//                                .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialogInterface, int i) {
-//                                        getDeveloperData();
-//                                    }
-//                                })
-//                                .setOnDismissListener(new DialogInterface.OnDismissListener() {
-//                                    @Override
-//                                    public void onDismiss(DialogInterface dialogInterface) {
-//                                    }
-//                                })
-//                                .create().show();
-//                        Toast.makeText(SplashScreen.this, "Failed", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//        DevLagApplication.getInstance().addToRequestQueue(jsonArrayRequest);
 
     }
 }

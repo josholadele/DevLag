@@ -25,9 +25,9 @@ public class DeveloperListAdapter
         extends RecyclerView.Adapter<DeveloperListAdapter.ViewHolder> {
 
     private final List<Developer> mValues;
-    boolean mTwoPane = false;
-    FragmentManager fragmentManager;
-    Context mContext;
+    private boolean mTwoPane = false;
+    private FragmentManager fragmentManager;
+    private Context mContext;
 
 
     public DeveloperListAdapter(Context context, List<Developer> items, FragmentManager fragmentManager, boolean hasTwoPane) {
@@ -47,7 +47,6 @@ public class DeveloperListAdapter
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        //holder.mIdView.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).getUsername());
         Glide.with(mContext).load(mValues.get(position).getPhotoUrl())/**/
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
@@ -68,8 +67,6 @@ public class DeveloperListAdapter
                     Context context = v.getContext();
                     Intent intent = new Intent(context, DeveloperDetailActivity.class);
                     intent.putExtra(DeveloperDetailFragment.ARG_ITEM_ID, holder.mItem);
-
-                    //intent.putExtra()
                     context.startActivity(intent);
                 }
             }
@@ -90,7 +87,7 @@ public class DeveloperListAdapter
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            profileImage = (CircleImageView) view.findViewById(R.id.profileImage);
+            profileImage = (CircleImageView) view.findViewById(R.id.profile_image);
             mContentView = (TextView) view.findViewById(R.id.content);
         }
 

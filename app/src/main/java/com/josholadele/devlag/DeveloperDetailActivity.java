@@ -39,7 +39,7 @@ public class DeveloperDetailActivity extends AppCompatActivity {
 
         instance = this;
         profileItemsLayout = (LinearLayout) findViewById(R.id.layout_profile_items);
-        profileImage = (CircleImageView) findViewById(R.id.profileImage);
+        profileImage = (CircleImageView) findViewById(R.id.profile_image);
 
         developer = getIntent().getParcelableExtra(DeveloperDetailFragment.ARG_ITEM_ID);
 
@@ -47,6 +47,15 @@ public class DeveloperDetailActivity extends AppCompatActivity {
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .fallback(R.drawable.avatar_contact)
                 .into(profileImage);
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DeveloperDetailActivity.this,ProfileImageView.class);
+                intent.putExtra(ProfileImageView.PROFILE_IMAGE_URL,developer.getPhotoUrl());
+                intent.putExtra(ProfileImageView.PROFILE_USERNAME,developer.getUsername());
+                startActivity(intent);
+            }
+        });
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
